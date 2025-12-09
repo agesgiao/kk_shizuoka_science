@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
   const videoMap = {};
-  for (let i = 2; i <= 11; i++) {
+  for (let i = 1; i <= 11; i++) {
     videoMap[`kk${i}`] = document.getElementById(`kk${i}`);
   }
   videoMap.kk61 = document.getElementById("kk61");
@@ -196,6 +196,7 @@ function resetMedia() {
 
   resetAll();
 });
+
 
 
 
