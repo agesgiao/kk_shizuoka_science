@@ -1,10 +1,12 @@
 document.addEventListener("DOMContentLoaded", () => {
+
+
   const voiceMap = {};
   for (let i = 1; i <= 12; i++) {
     voiceMap[`voice${i}`] = document.getElementById(`voice${i}`);
   }
 
-  // 動画マップ kk1～kk13 + kk61/kk62
+
   const videoMap = {};
   for (let i = 1; i <= 11; i++) {
     videoMap[`kk${i}`] = document.getElementById(`kk${i}`);
@@ -12,21 +14,6 @@ document.addEventListener("DOMContentLoaded", () => {
   videoMap.kk61 = document.getElementById("kk61");
   videoMap.kk62 = document.getElementById("kk62");
 
-  // 音声マップ
-  const audioMap = {
-    voice1: document.getElementById("voice1"),
-    voice2: document.getElementById("voice2"),
-    voice3: document.getElementById("voice3"),
-    voice4: document.getElementById("voice4"),
-    voice5: document.getElementById("voice5"),
-    voice6: document.getElementById("voice6"),
-    voice7: document.getElementById("voice7"),
-    voice8: document.getElementById("voice8"),
-	voice9: document.getElementById("voice9"),
-	voice10: document.getElementById("voice10"),
-	voice11: document.getElementById("voice11"),
-	voice12: document.getElementById("voice12")
-  };
 
   const overlaySuccess = document.getElementById("overlay-success");
   const overlayFail = document.getElementById("overlay-fail");
@@ -37,6 +24,8 @@ document.addEventListener("DOMContentLoaded", () => {
   let challengeStarted = false;
   let endingTriggered = false;
   let countdownInterval, timeoutId;
+
+
   const voiceQueue = [];
   let currentVoice = null;
   const playedVoices = new Set();
@@ -49,26 +38,31 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function tryPlayNextVoice() {
     if (currentVoice || voiceQueue.length === 0) return;
+
     const nextId = voiceQueue.shift();
     const next = voiceMap[nextId];
+
     if (!next) {
       tryPlayNextVoice();
       return;
     }
+
     currentVoice = next;
     playedVoices.add(nextId);
+
     currentVoice.currentTime = 0;
-    currentVoice.play();
+    currentVoice.play().catch(e => console.warn("Audio blocked:", e));
+
     currentVoice.onended = () => {
       currentVoice = null;
       tryPlayNextVoice();
     };
   }
 
+
   function resetMedia() {
     Object.values(videoMap).forEach(v => { v.pause(); v.currentTime = 0; });
-    Object.values(audioMap).forEach(a => { a.pause(); a.currentTime = 0; });
-    Object.values(voiceMap).forEach(v => { v.pause(); v.currentTime = 0; });
+    Object.values(voiceMap).forEach(a => { a.pause(); a.currentTime = 0; });
   }
 
   function resetOverlay() {
@@ -90,10 +84,13 @@ document.addEventListener("DOMContentLoaded", () => {
     endingTriggered = false;
     voiceQueue.length = 0;
     currentVoice = null;
+    playedVoices.clear();
   }
+
 
   function startCountdown() {
     if (challengeStarted) return;
+
     challengeStarted = true;
     let count = 30;
     countdownEl.textContent = count;
@@ -102,25 +99,23 @@ document.addEventListener("DOMContentLoaded", () => {
     countdownInterval = setInterval(() => {
       count--;
       countdownEl.textContent = count;
+
       if (count <= 0) {
         clearInterval(countdownInterval);
         countdownEl.style.display = "none";
       }
     }, 1000);
 
+    // タイムアウト（失敗）
     timeoutId = setTimeout(() => {
       if (!endingTriggered) {
         overlayFail.style.display = "flex";
+
         overlayVideoFail.play();
-        videoMap.kk61.play();
+        videoMap.kk61.play();  // ← mp4 の音声で OK
 
-        overlayVideoFail.onplay = () => {
-          audioMap.kk61.currentTime = 0;
-          audioMap.kk61.play().catch(e => console.warn("kk61 audio blocked:", e));
-        };
-
-        challengeStarted = false;
         endingTriggered = true;
+        challengeStarted = false;
       }
     }, 30000);
   }
@@ -128,32 +123,39 @@ document.addEventListener("DOMContentLoaded", () => {
   overlayVideoSuccess.onended = () => { overlaySuccess.style.display = "none"; };
   overlayVideoFail.onended = () => { overlayFail.style.display = "none"; };
 
+
+
   for (let i = 1; i <= 13; i++) {
     const el = document.getElementById(`target${i}`);
+
     el.addEventListener("targetFound", () => {
+
+      // チャレンジ中は target1 以外は無視
       if (challengeStarted && i !== 1 && !endingTriggered) return;
 
-      switch(i) {
+      switch (i) {
+
+        /* ---------- target1：成功 or スタート音声 ---------- */
         case 1:
           if (challengeStarted && !endingTriggered) {
+
             clearTimeout(timeoutId);
             clearInterval(countdownInterval);
             countdownEl.style.display = "none";
+
             overlaySuccess.style.display = "flex";
             overlayVideoSuccess.play();
-            videoMap.kk62.play();
+            videoMap.kk62.play();  // ← mp4 の音声で OK
 
-            overlayVideoSuccess.onplay = () => {
-              audioMap.kk62.currentTime = 0;
-              audioMap.kk62.play().catch(e => console.warn("kk62 audio blocked:", e));
-            };
-
-            challengeStarted = false;
             endingTriggered = true;
+            challengeStarted = false;
+
           } else if (!challengeStarted) {
             enqueueVoice("voice1");
           }
           break;
+
+        /* ---------- target2〜11 ---------- */
         case 2: videoMap.kk2.play(); enqueueVoice("voice2"); break;
         case 3: videoMap.kk3.play(); enqueueVoice("voice3"); break;
         case 4: videoMap.kk4.play(); enqueueVoice("voice4"); break;
@@ -164,13 +166,20 @@ document.addEventListener("DOMContentLoaded", () => {
         case 9: videoMap.kk9.play(); enqueueVoice("voice9"); break;
         case 10: videoMap.kk10.play(); enqueueVoice("voice10"); break;
         case 11: videoMap.kk11.play(); enqueueVoice("voice11"); break;
-        case 12: enqueueVoice("voice12"); voiceMap.voice12.onended = () => { startCountdown(); }; break;
-        case 13: location.reload(); break;
+
+        /* ---------- target12：音声再生→終了後カウントダウン ---------- */
+        case 12:
+          enqueueVoice("voice12");
+          voiceMap.voice12.onended = () => startCountdown();
+          break;
+
+        /* ---------- target13：リロード ---------- */
+        case 13:
+          location.reload();
+          break;
       }
     });
   }
 
   resetAll();
 });
-
-
