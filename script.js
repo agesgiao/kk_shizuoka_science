@@ -168,10 +168,16 @@ document.addEventListener("DOMContentLoaded", () => {
         case 11: videoMap.kk11.play(); enqueueVoice("voice11"); break;
 
         /* ---------- target12：音声再生→終了後カウントダウン ---------- */
-        case 12:
-          enqueueVoice("voice12");
-          voiceMap.voice12.onended = () => startCountdown();
-          break;
+case 12:
+  enqueueVoice("voice12");
+
+  const v12 = voiceMap.voice12;
+  v12.addEventListener("play", function handler() {
+    v12.removeEventListener("play", handler);
+    v12.onended = () => startCountdown();
+  });
+  break;
+
 
         /* ---------- target13：リロード ---------- */
         case 13:
@@ -183,3 +189,4 @@ document.addEventListener("DOMContentLoaded", () => {
 
   resetAll();
 });
+
