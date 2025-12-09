@@ -154,17 +154,17 @@ document.addEventListener("DOMContentLoaded", () => {
             enqueueVoice("voice1");
           }
           break;
-        case 2: videoMap.kk1.play(); audioMap.kk1.play("voice2"); break;
-        case 3: videoMap.kk2.play(); audioMap.kk2.play("voice3"); break;
-        case 4: videoMap.kk3.play(); enqueueVoice("voice4"); break;
-        case 5: videoMap.kk4.play(); audioMap.kk3.play("voice5"); break;
-        case 6: videoMap.kk5.play(); audioMap.kk4.play("voice6"); break;
-        case 7: videoMap.kk6.play(); enqueueVoice("voice7"); break;
-        case 8: videoMap.kk7.play(); audioMap.kk5.play("voice8"); break;
-        case 9: videoMap.kk8.play(); enqueueVoice("voice9"); break;
-        case 10: videoMap.kk9.play(); enqueueVoice("voice10"); break;
-        case 11: videoMap.kk10.play(); audioMap.kk6.play("voice11"); break;
-        case 12: enqueueVoice("voice12"); voiceMap.voice8.onended = () => { startCountdown(); }; break;
+        case 2: videoMap.kk2.play(); enqueueVoice("voice2"); break;
+        case 3: videoMap.kk3.play(); enqueueVoice("voice3"); break;
+        case 4: videoMap.kk4.play(); enqueueVoice("voice4"); break;
+        case 5: videoMap.kk5.play(); enqueueVoice("voice5"); break;
+        case 6: videoMap.kk6.play(); enqueueVoice("voice6"); break;
+        case 7: videoMap.kk7.play(); enqueueVoice("voice7"); break;
+        case 8: videoMap.kk8.play(); enqueueVoice("voice8"); break;
+        case 9: videoMap.kk9.play(); enqueueVoice("voice9"); break;
+        case 10: videoMap.kk10.play(); enqueueVoice("voice10"); break;
+        case 11: videoMap.kk11.play(); enqueueVoice("voice11"); break;
+        case 12: enqueueVoice("voice12"); voiceMap.voice12.onended = () => { startCountdown(); }; break;
         case 13: location.reload(); break;
       }
     });
