@@ -66,10 +66,21 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
 
-  function resetMedia() {
-    Object.values(videoMap).forEach(v => { v.pause(); v.currentTime = 0; });
-    Object.values(voiceMap).forEach(a => { a.pause(); a.currentTime = 0; });
-  }
+function resetMedia() {
+  Object.values(videoMap).forEach(v => {
+    if (v) {
+      v.pause();
+      v.currentTime = 0;
+    }
+  });
+  Object.values(voiceMap).forEach(a => {
+    if (a) {
+      a.pause();
+      a.currentTime = 0;
+    }
+  });
+}
+
 
   function resetOverlay() {
     overlaySuccess.style.display = "none";
