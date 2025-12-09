@@ -49,6 +49,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
     currentVoice = next;
     playedVoices.add(nextId);
+	  
+	if (currentVoice._afterPlay) {
+    currentVoice._afterPlay();
+    currentVoice._afterPlay = null;
+    }  
+	
 
     currentVoice.currentTime = 0;
     currentVoice.play().catch(e => console.warn("Audio blocked:", e));
@@ -168,15 +174,22 @@ document.addEventListener("DOMContentLoaded", () => {
         case 11: videoMap.kk11.play(); enqueueVoice("voice11"); break;
 
         /* ---------- target12：音声再生→終了後カウントダウン ---------- */
-case 12:
-  enqueueVoice("voice12");
-
+/* ---------- target12：音声再生→終了後カウントダウン ---------- */
+case 12: {
   const v12 = voiceMap.voice12;
-  v12.addEventListener("play", function handler() {
-    v12.removeEventListener("play", handler);
-    v12.onended = () => startCountdown();
-  });
+
+  // 再生される直前に呼び出すためのフック
+  v12._afterPlay = () => {
+    v12.onended = () => {
+      v12.onended = null;
+      startCountdown();
+    };
+  };
+
+  enqueueVoice("voice12");
   break;
+}
+
 
 
         /* ---------- target13：リロード ---------- */
@@ -189,4 +202,3 @@ case 12:
 
   resetAll();
 });
-
