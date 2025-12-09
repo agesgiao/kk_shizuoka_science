@@ -184,22 +184,18 @@ function resetMedia() {
         case 10: videoMap.kk10.play(); enqueueVoice("voice10"); break;
         case 11: videoMap.kk11.play(); enqueueVoice("voice11"); break;
 
-        /* ---------- target12：音声再生→終了後カウントダウン ---------- */
-/* ---------- target12：音声再生→終了後カウントダウン ---------- */
 case 12: {
   const v12 = voiceMap.voice12;
 
-  // 再生される直前に呼び出すためのフック
-  v12._afterPlay = () => {
-    v12.onended = () => {
-      v12.onended = null;
-      startCountdown();
-    };
+  // voice12 が再生し終わったらカウントダウン開始
+  v12.onended = () => {
+    startCountdown();
   };
 
-  enqueueVoice("voice12");
+  enqueueVoice("voice12"); // ← 他の voice と同じ
   break;
 }
+
 
 
 
@@ -213,4 +209,5 @@ case 12: {
 
   resetAll();
 });
+
 
