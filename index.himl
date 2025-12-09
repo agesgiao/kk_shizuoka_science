@@ -62,10 +62,9 @@
   </style>
 </head>
 <body>
-  <a-scene mindar-image="imageTargetSrc: ./targets4.mind; filterMinCF:0.0001; showStats: false; uiScanning: false;" color-space="sRGB" renderer="colorManagement: true, physicallyCorrectLights, alpha: true" vr-mode-ui="enabled: false" device-orientation-permission-ui="enabled: false">
+  <a-scene mindar-image="imageTargetSrc: ./targets5.mind; filterMinCF:0.0001; showStats: false; uiScanning: false;" color-space="sRGB" renderer="colorManagement: true, physicallyCorrectLights, alpha: true" vr-mode-ui="enabled: false" device-orientation-permission-ui="enabled: false">
     <a-assets>
       <!-- 動画 kk1～kk13 を追加 -->
-      <video id="kk1" src="./kk1.mp4" loop muted playsinline crossorigin="anonymous"></video>
       <video id="kk2" src="./kk2.mp4" loop muted playsinline crossorigin="anonymous"></video>
       <video id="kk3" src="./kk3.mp4" loop muted playsinline preload="auto"></video>
       <video id="kk4" src="./kk4.mp4" loop muted playsinline preload="auto"></video>
@@ -76,8 +75,6 @@
       <video id="kk9" src="./kk9.mp4" loop muted playsinline preload="auto"></video>
       <video id="kk10" src="./kk10.mp4" loop muted playsinline preload="auto"></video>
       <video id="kk11" src="./kk11.mp4" loop muted playsinline preload="auto"></video>
-      <video id="kk12" src="./kk12.mp4" loop muted playsinline preload="auto"></video>
-      <video id="kk13" src="./kk13.mp4" loop muted playsinline preload="auto"></video>
 
       <!-- 音声ファイルはそのまま -->
       <audio id="voice1" src="./voice1.mp3" preload="auto"></audio>
@@ -88,13 +85,10 @@
       <audio id="voice6" src="./voice6.mp3" preload="auto"></audio>
       <audio id="voice7" src="./voice7.mp3" preload="auto"></audio>
       <audio id="voice8" src="./voice8.mp3" preload="auto"></audio>
-      <audio id="kk1-audio" src="./kk1-audio.mp3" preload="auto"></audio>
-      <audio id="kk2-audio" src="./kk2-audio.mp3" preload="auto"></audio>
-      <audio id="kk3-audio" src="./kk3-audio.mp3" preload="auto"></audio>
-      <audio id="kk4-audio" src="./kk4-audio.mp3" preload="auto"></audio>
-      <audio id="kk5-audio" src="./kk5-audio.mp3" preload="auto"></audio>
-      <audio id="kk6-audio" src="./kk6-audio.mp3" preload="auto"></audio>
-      <audio id="kk7-audio" src="./kk7-audio.mp3" preload="auto"></audio>
+	  <audio id="voice9" src="./voice9.mp3" preload="auto"></audio>
+	  <audio id="voice10" src="./voice10.mp3" preload="auto"></audio>
+	  <audio id="voice11" src="./voice11.mp3" preload="auto"></audio>
+	  <audio id="voice12" src="./voice12.mp3" preload="auto"></audio>
     </a-assets>
 
     <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
@@ -142,20 +136,8 @@
       <a-plane width="2" height="1.12" position="0 0 0" material="shader: flat; src: #kk10"></a-plane>
     </a-entity>
 
-    <a-entity id="target12" mindar-image-target="targetIndex: 11">
-      <a-plane width="2" height="1.12" position="0 0 0" material="shader: flat; src: #kk11"></a-plane>
-    </a-entity>
-
-    <a-entity id="target13" mindar-image-target="targetIndex: 12">
-      <a-plane width="2" height="1.12" position="0 0 0" material="shader: flat; src: #kk12"></a-plane>
-    </a-entity>
-
-    <a-entity id="target14" mindar-image-target="targetIndex: 13">
-      <a-plane width="2" height="1.12" position="0 0 0" material="shader: flat; src: #kk13"></a-plane>
-    </a-entity>
-
-    <a-entity id="target15" mindar-image-target="targetIndex: 14"></a-entity>
-    <a-entity id="target16" mindar-image-target="targetIndex: 15"></a-entity>
+    <a-entity id="target12" mindar-image-target="targetIndex: 12"></a-entity>
+    <a-entity id="target13" mindar-image-target="targetIndex: 13"></a-entity>
 
   </a-scene>
 
@@ -168,7 +150,7 @@
     <video id="overlay-video-fail" src="./kk61.mp4" playsinline></video>
   </div>
 
-  <div id="countdown">10</div>
+  <div id="countdown">30</div>
 
   <script src="script.js"></script>
 </body>
