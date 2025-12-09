@@ -183,20 +183,7 @@ function resetMedia() {
         case 9: videoMap.kk9.play(); enqueueVoice("voice9"); break;
         case 10: videoMap.kk10.play(); enqueueVoice("voice10"); break;
         case 11: videoMap.kk11.play(); enqueueVoice("voice11"); break;
-
-case 12: {
-  const v12 = voiceMap.voice12;
-
-  // voice12 が再生し終わったらカウントダウン開始
-  v12.onended = () => {
-    startCountdown();
-  };
-
-  enqueueVoice("voice12"); // ← 他の voice と同じ
-  break;
-}
-
-
+		case 12: videoMap.kk12.play(); enqueueVoice("voice12"); break;
 
 
         /* ---------- target13：リロード ---------- */
@@ -209,5 +196,6 @@ case 12: {
 
   resetAll();
 });
+
 
 
