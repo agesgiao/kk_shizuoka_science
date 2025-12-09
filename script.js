@@ -1,12 +1,12 @@
 document.addEventListener("DOMContentLoaded", () => {
   const voiceMap = {};
-  for (let i = 1; i <= 11; i++) {
+  for (let i = 1; i <= 12; i++) {
     voiceMap[`voice${i}`] = document.getElementById(`voice${i}`);
   }
 
   // 動画マップ kk1～kk13 + kk61/kk62
   const videoMap = {};
-  for (let i = 1; i <= 11; i++) {
+  for (let i = 1; i <= 12; i++) {
     videoMap[`kk${i}`] = document.getElementById(`kk${i}`);
   }
   videoMap.kk61 = document.getElementById("kk61");
@@ -172,3 +172,4 @@ document.addEventListener("DOMContentLoaded", () => {
 
   resetAll();
 });
+
