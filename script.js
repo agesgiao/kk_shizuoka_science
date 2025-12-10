@@ -183,7 +183,12 @@ function resetMedia() {
         case 9: videoMap.kk9.play(); enqueueVoice("voice9"); break;
         case 10: videoMap.kk10.play(); enqueueVoice("voice10"); break;
         case 11: videoMap.kk11.play(); enqueueVoice("voice11"); break;
-		case 12: enqueueVoice("voice12"); voiceMap.voice12.onended = () => { startCountdown(); }; break;
+
+case 12:
+  voiceMap.voice12._afterPlay = () => startCountdown();
+  enqueueVoice("voice12");
+  break;
+
 
 
         /* ---------- target13：リロード ---------- */
@@ -196,6 +201,7 @@ function resetMedia() {
 
   resetAll();
 });
+
 
 
 
