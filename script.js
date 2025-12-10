@@ -185,10 +185,11 @@ function resetMedia() {
         case 11: videoMap.kk11.play(); enqueueVoice("voice11"); break;
 
 case 12:
-  voiceMap.voice12._afterPlay = () => startCountdown();
   enqueueVoice("voice12");
+  voiceMap.voice12.onended = () => {
+    startCountdown();
+  };
   break;
-
 
 
         /* ---------- target13：リロード ---------- */
@@ -201,6 +202,7 @@ case 12:
 
   resetAll();
 });
+
 
 
 
