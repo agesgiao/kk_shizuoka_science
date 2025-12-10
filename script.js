@@ -183,7 +183,24 @@ function resetMedia() {
         case 9: videoMap.kk9.play(); enqueueVoice("voice9"); break;
         case 10: videoMap.kk10.play(); enqueueVoice("voice10"); break;
         case 11: videoMap.kk11.play(); enqueueVoice("voice11"); break;
-		case 12: enqueueVoice("voice12"); break;
+
+        /* ---------- target12：音声再生→終了後カウントダウン ---------- */
+/* ---------- target12：音声再生→終了後カウントダウン ---------- */
+case 12: {
+  playedVoices.delete("voice12"); // ★これ必須！
+
+  const v12 = voiceMap.voice12;
+
+  v12.onended = () => {
+    startCountdown();
+  };
+
+  enqueueVoice("voice12");
+  break;
+}
+
+
+
 
 
         /* ---------- target13：リロード ---------- */
@@ -196,8 +213,3 @@ function resetMedia() {
 
   resetAll();
 });
-
-
-
-
-
