@@ -184,20 +184,13 @@ function resetMedia() {
         case 10: videoMap.kk10.play(); enqueueVoice("voice10"); break;
         case 11: videoMap.kk11.play(); enqueueVoice("voice11"); break;
 
-case 12: {
-  console.log("target12 found");
+case 12:
+  enqueueVoice("voice12");
 
-  // voice12 の再生完了後にカウントダウンを開始
-  voiceMap.voice12._afterPlay = () => {
-    console.log("voice12 ended → start countdown");
+  voiceMap.voice12.onended = () => {
     startCountdown();
   };
-
-  enqueueVoice("voice12");
   break;
-}
-
-
 
 
         /* ---------- target13：リロード ---------- */
@@ -210,5 +203,6 @@ case 12: {
 
   resetAll();
 });
+
 
 
