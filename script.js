@@ -30,45 +30,34 @@ document.addEventListener("DOMContentLoaded", () => {
   let currentVoice = null;
   const playedVoices = new Set();
 
-  function enqueueVoice(id) {
-    if (currentVoice || voiceQueue.includes(id) || playedVoices.has(id)) return;
-    voiceQueue.push(id);
-    tryPlayNextVoice();
-  }
+function enqueueVoice(id) {
+  if (voiceQueue.includes(id) || playedVoices.has(id)) return; // 既に再生済みなら無視
+  voiceQueue.push(id);
+  tryPlayNextVoice();
+}
 
 function tryPlayNextVoice() {
   if (currentVoice || voiceQueue.length === 0) return;
 
   const nextId = voiceQueue.shift();
   const next = voiceMap[nextId];
-
-  if (!next) {
-    tryPlayNextVoice();
-    return;
-  }
+  if (!next) return tryPlayNextVoice();
 
   currentVoice = next;
-  playedVoices.add(nextId);
-
-  if (currentVoice._afterPlay) {
-    currentVoice._afterPlay();
-    currentVoice._afterPlay = null;
-  }
-
   currentVoice.currentTime = 0;
   currentVoice.play().catch(e => console.warn("Audio blocked:", e));
 
   currentVoice.onended = () => {
-
-    // ★★★ voice12 の時だけ特別処理
-    if (nextId === "voice12") {
-      startCountdown();
-    }
-
+    playedVoices.add(nextId); // 再生済みに追加
     currentVoice = null;
+
+    // voice12 の場合だけ再生終了後にカウントダウン
+    if (nextId === "voice12") startCountdown();
+
     tryPlayNextVoice();
   };
 }
+
 
 
 
@@ -202,6 +191,7 @@ function resetMedia() {
 
   resetAll();
 });
+
 
 
 
