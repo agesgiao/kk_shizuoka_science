@@ -187,19 +187,29 @@ function resetMedia() {
         /* ---------- target12：音声再生→終了後カウントダウン ---------- */
 /* ---------- target12：音声再生→終了後カウントダウン ---------- */
 case 12: {
-  playedVoices.delete("voice12"); // ★これ必須！
-
   const v12 = voiceMap.voice12;
 
+  console.log("voice12 test: try play");  // ★ デバッグ用ログ
+
+  playedVoices.delete("voice12");
+  voiceQueue.length = 0;
+  currentVoice = null;
+
+  v12.currentTime = 0;
+
   v12.onended = () => {
+    console.log("voice12 ended");
     startCountdown();
   };
 
-  enqueueVoice("voice12");
+  v12.play().then(() => {
+    console.log("voice12 playing");
+  }).catch(e => {
+    console.error("voice12 play error:", e);
+  });
+
   break;
 }
-
-
 
 
 
@@ -213,3 +223,4 @@ case 12: {
 
   resetAll();
 });
+
