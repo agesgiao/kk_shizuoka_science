@@ -36,34 +36,40 @@ document.addEventListener("DOMContentLoaded", () => {
     tryPlayNextVoice();
   }
 
-  function tryPlayNextVoice() {
-    if (currentVoice || voiceQueue.length === 0) return;
+function tryPlayNextVoice() {
+  if (currentVoice || voiceQueue.length === 0) return;
 
-    const nextId = voiceQueue.shift();
-    const next = voiceMap[nextId];
+  const nextId = voiceQueue.shift();
+  const next = voiceMap[nextId];
 
-    if (!next) {
-      tryPlayNextVoice();
-      return;
-    }
+  if (!next) {
+    tryPlayNextVoice();
+    return;
+  }
 
-    currentVoice = next;
-    playedVoices.add(nextId);
-	  
-	if (currentVoice._afterPlay) {
+  currentVoice = next;
+  playedVoices.add(nextId);
+
+  if (currentVoice._afterPlay) {
     currentVoice._afterPlay();
     currentVoice._afterPlay = null;
-    }  
-	
-
-    currentVoice.currentTime = 0;
-    currentVoice.play().catch(e => console.warn("Audio blocked:", e));
-
-    currentVoice.onended = () => {
-      currentVoice = null;
-      tryPlayNextVoice();
-    };
   }
+
+  currentVoice.currentTime = 0;
+  currentVoice.play().catch(e => console.warn("Audio blocked:", e));
+
+  currentVoice.onended = () => {
+
+    // ★★★ voice12 の時だけ特別処理
+    if (nextId === "voice12") {
+      startCountdown();
+    }
+
+    currentVoice = null;
+    tryPlayNextVoice();
+  };
+}
+
 
 
 function resetMedia() {
@@ -183,13 +189,7 @@ function resetMedia() {
         case 9: videoMap.kk9.play(); enqueueVoice("voice9"); break;
         case 10: videoMap.kk10.play(); enqueueVoice("voice10"); break;
         case 11: videoMap.kk11.play(); enqueueVoice("voice11"); break;
-
-case 12:
-  enqueueVoice("voice12");
-  voiceMap.voice12.onended = () => {
-    startCountdown();
-  };
-  break;
+		case 12:enqueueVoice("voice12");　break;
 
 
         /* ---------- target13：リロード ---------- */
@@ -202,6 +202,7 @@ case 12:
 
   resetAll();
 });
+
 
 
 
