@@ -59,10 +59,24 @@
       pointer-events: none;
       text-shadow: 2px 2px 5px white;
     }
+	  
+	#countdown-telop {
+	  display:none;
+      position: fixed;
+      top: 20%;
+      width: 100%;
+      text-align: center;
+      font-size: 2rem;
+      color: red;
+      background: rgba(0,0,0,0.6);
+      padding: 10px;
+      z-index: 9999;
+	  }
+	  
   </style>
 </head>
 <body>
-  <a-scene mindar-image="imageTargetSrc: ./targets6.mind; filterMinCF:0.0001; showStats: false; uiScanning: false;" color-space="sRGB" renderer="colorManagement: true, physicallyCorrectLights, alpha: true" vr-mode-ui="enabled: false" device-orientation-permission-ui="enabled: false">
+  <a-scene mindar-image="imageTargetSrc: ./targets5.mind; filterMinCF:0.0001; showStats: false; uiScanning: false;" color-space="sRGB" renderer="colorManagement: true, physicallyCorrectLights, alpha: true" vr-mode-ui="enabled: false" device-orientation-permission-ui="enabled: false">
     <a-assets>
       <!-- 動画 kk1～kk13 を追加 -->
       <video id="kk2" src="./kk2.mp4" loop muted playsinline crossorigin="anonymous"></video>
@@ -151,6 +165,8 @@
   </div>
 
   <div id="countdown">30</div>
+  <div id="countdown-telop">巻物を巻き戻してカエル長老に伝説の花を届けよう！</div>
+
 
   <script src="script.js"></script>
 </body>
