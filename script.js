@@ -164,6 +164,7 @@ function startCountdown() {
             clearTimeout(timeoutId);
             clearInterval(countdownInterval);
             countdownEl.style.display = "none";
+			countdownTelop.style.display = "none";
 
             overlaySuccess.style.display = "flex";
             overlayVideoSuccess.play();
@@ -201,6 +202,7 @@ function startCountdown() {
 
   resetAll();
 });
+
 
 
 
