@@ -37,7 +37,7 @@ function enqueueVoice(id) {
   voiceQueue.push(id);
   tryPlayNextVoice();
 }
-
+	
 function tryPlayNextVoice() {
   if (currentVoice || voiceQueue.length === 0) return;
 
@@ -46,19 +46,23 @@ function tryPlayNextVoice() {
   if (!next) return tryPlayNextVoice();
 
   currentVoice = next;
+
+  // ★ 再生開始時点で再生済みにする
+  playedVoices.add(nextId);
+
   currentVoice.currentTime = 0;
   currentVoice.play().catch(e => console.warn("Audio blocked:", e));
 
   currentVoice.onended = () => {
-    playedVoices.add(nextId); // 再生済みに追加
     currentVoice = null;
 
-    // voice12 の場合だけ再生終了後にカウントダウン
+    // voice12 は再生終了後にカウントダウン
     if (nextId === "voice12") startCountdown();
 
     tryPlayNextVoice();
   };
 }
+
 
 
 
@@ -197,6 +201,7 @@ function startCountdown() {
 
   resetAll();
 });
+
 
 
 
