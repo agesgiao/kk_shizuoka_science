@@ -20,6 +20,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const overlayVideoSuccess = document.getElementById("overlay-video-success");
   const overlayVideoFail = document.getElementById("overlay-video-fail");
   const countdownEl = document.getElementById("countdown");
+　const countdownTelop = document.getElementById("countdown-telop");
+
 
   let challengeStarted = false;
   let endingTriggered = false;
@@ -100,37 +102,41 @@ function resetMedia() {
   }
 
 
-  function startCountdown() {
-    if (challengeStarted) return;
+function startCountdown() {
+  if (challengeStarted) return;
 
-    challengeStarted = true;
-    let count = 30;
+  challengeStarted = true;
+  let count = 30;
+
+  // テロップ表示
+  countdownTelop.style.display = "block";
+
+  countdownEl.textContent = count;
+  countdownEl.style.display = "block";
+
+  countdownInterval = setInterval(() => {
+    count--;
     countdownEl.textContent = count;
-    countdownEl.style.display = "block";
 
-    countdownInterval = setInterval(() => {
-      count--;
-      countdownEl.textContent = count;
+    if (count <= 0) {
+      clearInterval(countdownInterval);
+      countdownEl.style.display = "none";
+      countdownTelop.style.display = "none"; // ← テロップも消す
+    }
+  }, 1000);
 
-      if (count <= 0) {
-        clearInterval(countdownInterval);
-        countdownEl.style.display = "none";
-      }
-    }, 1000);
+  timeoutId = setTimeout(() => {
+    if (!endingTriggered) {
+      overlayFail.style.display = "flex";
+      overlayVideoFail.play();
+      videoMap.kk61.play();
 
-    // タイムアウト（失敗）
-    timeoutId = setTimeout(() => {
-      if (!endingTriggered) {
-        overlayFail.style.display = "flex";
-
-        overlayVideoFail.play();
-        videoMap.kk61.play();  // ← mp4 の音声で OK
-
-        endingTriggered = true;
-        challengeStarted = false;
-      }
-    }, 30000);
-  }
+      endingTriggered = true;
+      challengeStarted = false;
+      countdownTelop.style.display = "none"; // ← 念のため
+    }
+  }, 30000);
+}
 
   overlayVideoSuccess.onended = () => { overlaySuccess.style.display = "none"; };
   overlayVideoFail.onended = () => { overlayFail.style.display = "none"; };
@@ -191,6 +197,7 @@ function resetMedia() {
 
   resetAll();
 });
+
 
 
 
