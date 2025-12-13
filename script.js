@@ -158,25 +158,26 @@ function startCountdown() {
       switch (i) {
 
         /* ---------- target1：成功 or スタート音声 ---------- */
-        case 1:
-          if (challengeStarted && !endingTriggered) {
+case 1:
+  if (challengeStarted && !endingTriggered) {
 
-            clearTimeout(timeoutId);
-            clearInterval(countdownInterval);
-            countdownEl.style.display = "none";
-			countdownTelop.style.display = "none";
+    clearTimeout(timeoutId);
+    clearInterval(countdownInterval);
+    countdownEl.style.display = "none";
+    countdownTelop.style.display = "none"; // ← ★ここ！
 
-            overlaySuccess.style.display = "flex";
-            overlayVideoSuccess.play();
-            videoMap.kk62.play();  // ← mp4 の音声で OK
+    overlaySuccess.style.display = "flex";
+    overlayVideoSuccess.play();
+    videoMap.kk62.play();
 
-            endingTriggered = true;
-            challengeStarted = false;
+    endingTriggered = true;
+    challengeStarted = false;
 
-          } else if (!challengeStarted) {
-            enqueueVoice("voice1");
-          }
-          break;
+  } else if (!challengeStarted) {
+    enqueueVoice("voice1");
+  }
+  break;
+
 
         /* ---------- target2〜11 ---------- */
         case 2: videoMap.kk2.play(); enqueueVoice("voice2"); break;
@@ -202,6 +203,7 @@ function startCountdown() {
 
   resetAll();
 });
+
 
 
 
