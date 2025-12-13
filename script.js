@@ -86,6 +86,11 @@ function resetMedia() {
   function resetOverlay() {
     overlaySuccess.style.display = "none";
     overlayFail.style.display = "none";
+	overlayVideoSuccess.onplay = () => {
+  countdownTelop.style.display = "none";
+  countdownEl.style.display = "none";
+};
+
     overlayVideoSuccess.pause();
     overlayVideoSuccess.currentTime = 0;
     overlayVideoFail.pause();
@@ -203,6 +208,7 @@ case 1:
 
   resetAll();
 });
+
 
 
 
